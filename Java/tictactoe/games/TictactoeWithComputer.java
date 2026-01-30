@@ -47,7 +47,11 @@ public class TictactoeWithComputer extends JFrame  {
                         JOptionPane.showMessageDialog(wiFrame, "Wrong TURN. Wait till Computer plays");
                         return;
                     }
-                        
+                    if(board[row][col] !=' ')
+                    {
+                        JOptionPane.showMessageDialog(wiFrame, "Invalid choice");
+                        return;
+                    }    
                     if(board[row][col]==' '){
                         board[row][col]=currentPlayer;
                         buttons[row][col].setText(String.valueOf(currentPlayer));
@@ -59,7 +63,7 @@ public class TictactoeWithComputer extends JFrame  {
                             buttons[row][col].setForeground(Color.RED);
                     }
                     if (checkWinner()) {
-                        //disableAllButtons(buttons);
+                        disableAllButtons(buttons);
                         
                         JOptionPane.showMessageDialog(wiFrame, "You won!");
                         resetButtonsAndBoard(buttons,board);
@@ -145,7 +149,7 @@ public class TictactoeWithComputer extends JFrame  {
         
     }
 
-    
+
     private static void computerPlays(JButton[][] buttons, JFrame wiFrame){
         
        
@@ -164,7 +168,7 @@ public class TictactoeWithComputer extends JFrame  {
                     }
 
                     if (checkWinner()) {
-                        //disableAllButtons(buttons);
+                        disableAllButtons(buttons);
                         JOptionPane.showMessageDialog(wiFrame, "Computer wins!");
                         resetButtonsAndBoard(buttons,board);
                         return;                        

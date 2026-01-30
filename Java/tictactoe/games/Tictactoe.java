@@ -55,14 +55,16 @@ public class Tictactoe extends JFrame  {
                         //disableAllButtons(buttons);
                         JOptionPane.showMessageDialog(wiFrame, "Player " + currentPlayer + " wins!");
                         resetButtonsAndBoard(buttons,board);
+                        return;
                         
-                    } else if (checkBoardFull()) {
+                    } 
+                    if (checkBoardFull()) {
                         JOptionPane.showMessageDialog(wiFrame, "It's a draw!");
                         resetButtonsAndBoard(buttons,board);
-                           
-                    } else {
+                        return;   
+                    } 
                         changePlayer();
-                    }
+                    
                 });
 
                 wiFrame.add(buttons[i][j]);
@@ -81,14 +83,13 @@ public class Tictactoe extends JFrame  {
 
 
     private static boolean checkBoardFull(){
-        boolean boardFull = true;
          for(int i=0; i<3;i++){
             for(int j=0;j<3;j++){
                 if(board[i][j] ==' ')
                     return false;
             }
         }
-        return boardFull;
+        return true;
     }
 
     private static boolean checkWinner(){
@@ -124,6 +125,7 @@ public class Tictactoe extends JFrame  {
             for(int j=0;j<3;j++){
                 buttons[i][j].setText(" ");
                 buttons[i][j].setBackground(null);
+                buttons[i][j].setEnabled(true);
                 board[i][j] = ' ';
 
             }}
