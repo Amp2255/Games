@@ -1,18 +1,131 @@
-// package games;
-// import javax.swing.JFrame;
+package games;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-// public class Tictactoe extends JFrame {
+import java.awt. *;
 
-//     public Tictactoe(){
-//         setTitle("Window for tictactoe");
-//         setSize(500,400);
-//         setLocationRelativeTo(null);
-//         setDefaultCloseOperation(EXIT_ON_CLOSE);
-//     }
+public class Tictactoe extends JFrame  {
 
-//     public static void main(String[] args) {
-//         Tictactoe tw = new Tictactoe();
-//         tw.setVisible(true);
-//     }
+    static char[][] board = {
+            {' ',' ',' '},
+            {' ',' ',' '},
+            {' ',' ',' '}
+        };
+
+    static char currentPlayer ='X';
+
+    private static void changePlayer(){
+        currentPlayer = (currentPlayer=='X')? '0' : 'X';
+    }
+
     
-// }
+    public static void main(String[] args) {
+        createWindow();
+        
+    }
+
+    private static void createWindow() {
+        JFrame wiFrame = new JFrame();
+        wiFrame.setTitle("Tic-Tac-Toe");
+        wiFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        wiFrame.setLocationRelativeTo(null);
+        wiFrame.setSize(500,500);
+        wiFrame.setLayout(new GridLayout(3, 3));
+        
+        JButton [][] buttons = new JButton[3][3] ; 
+        for(int i=0;i<3; i++){
+            for(int j=0;j<3; j++){
+                buttons[i][j] = new JButton(); // Create button
+                setButtonStyle(buttons[i][j]);
+                 final int row =i;
+                 final int col=j;
+                buttons[i][j].addActionListener(e->{
+                    if(board[row][col]==' '){
+                        board[row][col]=currentPlayer;
+                        buttons[row][col].setText(String.valueOf(currentPlayer));
+                        buttons[row][col].setBackground(Color.LIGHT_GRAY);
+                        buttons[row][col].setOpaque(true);
+                        if(currentPlayer=='X')
+                            buttons[row][col].setForeground(Color.BLUE);
+                        else
+                            buttons[row][col].setForeground(Color.RED);
+                    }
+                    if (checkWinner()) {
+                        //disableAllButtons(buttons);
+                        JOptionPane.showMessageDialog(wiFrame, "Player " + currentPlayer + " wins!");
+                        resetButtonsAndBoard(buttons,board);
+                        
+                    } else if (checkBoardFull()) {
+                        JOptionPane.showMessageDialog(wiFrame, "It's a draw!");
+                        resetButtonsAndBoard(buttons,board);
+                           
+                    } else {
+                        changePlayer();
+                    }
+                });
+
+                wiFrame.add(buttons[i][j]);
+            }
+        }  
+        wiFrame.setVisible(true);
+        
+    }
+    
+    
+
+
+    private static void setButtonStyle(JButton jButton) {
+        jButton.setFont(new Font("Arial", Font.BOLD, 25));
+    }
+
+
+    private static boolean checkBoardFull(){
+        boolean boardFull = true;
+         for(int i=0; i<3;i++){
+            for(int j=0;j<3;j++){
+                if(board[i][j] ==' ')
+                    return false;
+            }
+        }
+        return boardFull;
+    }
+
+    private static boolean checkWinner(){
+
+         if (board[0][0] == currentPlayer &&
+            board[1][1] == currentPlayer &&
+            board[2][2] == currentPlayer) return true;
+
+        if (board[0][2] == currentPlayer &&
+            board[1][1] == currentPlayer &&
+            board[2][0] == currentPlayer) return true;
+
+         for (int i = 0; i < 3; i++) {
+            if (board[i][0] == currentPlayer &&
+                board[i][1] == currentPlayer &&
+                board[i][2] == currentPlayer) return true;
+
+            if (board[0][i] == currentPlayer &&
+                board[1][i] == currentPlayer &&
+                board[2][i] == currentPlayer) return true;
+            }
+            return false;
+    }
+
+    private static void disableAllButtons(JButton[][] buttons){
+         for(int i=0; i<3;i++){
+            for(int j=0;j<3;j++){
+                buttons[i][j].setEnabled(false);
+            }}
+    }
+    private static void resetButtonsAndBoard(JButton[][] buttons,char[][] board){
+         for(int i=0; i<3;i++){
+            for(int j=0;j<3;j++){
+                buttons[i][j].setText(" ");
+                buttons[i][j].setBackground(null);
+                board[i][j] = ' ';
+
+            }}
+    }
+}
