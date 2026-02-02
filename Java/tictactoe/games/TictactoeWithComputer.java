@@ -1,6 +1,7 @@
 package games;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -42,11 +43,8 @@ public class TictactoeWithComputer extends JFrame  {
                  final int row =i;
                  final int col=j;
                 buttons[i][j].addActionListener(e->{
-                    if(currentPlayer !='X')
-                    {
-                        JOptionPane.showMessageDialog(wiFrame, "Wrong TURN. Wait till Computer plays");
-                        return;
-                    }
+                    if(currentPlayer !='X') return;
+                    
                     if(board[row][col] !=' ')
                     {
                         JOptionPane.showMessageDialog(wiFrame, "Invalid choice");
@@ -141,9 +139,10 @@ public class TictactoeWithComputer extends JFrame  {
     }
 
     private static void delayComputerMove(JButton[][] buttons, JFrame wiFrame) {
+        wiFrame.setTitle("Computer thinking!");
         currentPlayer = 'O';
         Timer timer = new Timer(700, e -> computerPlays(buttons, wiFrame));
-
+        
         timer.setRepeats(false); // run only once
         timer.start();
         
@@ -178,7 +177,7 @@ public class TictactoeWithComputer extends JFrame  {
                         resetButtonsAndBoard(buttons,board);
                         return;   
                     }
-                    
+                    wiFrame.setTitle("Tic-Tac-Toe");
                     currentPlayer ='X'; 
     }
 
